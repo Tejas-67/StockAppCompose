@@ -13,10 +13,11 @@ import com.tejas.stocksappcompose.util.Resource.Success
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
 import java.io.IOException
+import javax.inject.Inject
 import javax.inject.Singleton
 
 @Singleton
-class StockRepositoryImpl(
+class StockRepositoryImpl @Inject constructor(
     val api: StockApi,
     val db: StockDatabase
 ): StockRepository {
@@ -42,7 +43,7 @@ class StockRepositoryImpl(
             }
             val remoteListings = try{
                 val response = api.getListings()
-                
+
             }catch(e: IOException){
                 e.printStackTrace()
                 emit(Resource.Error("some error occurred"))
