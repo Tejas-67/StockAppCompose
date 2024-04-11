@@ -4,7 +4,7 @@ plugins {
     id("kotlin-kapt")
     id("com.google.dagger.hilt.android")
     id("kotlin-parcelize")
-//    id("com.google.devtools.ksp") version "1.6.10-1.0.2"
+    id("com.google.devtools.ksp")
 }
 
 android {
@@ -76,7 +76,6 @@ dependencies {
 
     // Compose dependencies
     implementation("androidx.lifecycle:lifecycle-viewmodel-compose:2.7.0")
-    implementation( "androidx.compose.material:material-icons-extended:1.8.2")
     implementation("androidx.activity:activity-compose:1.8.2")
     implementation("com.google.accompanist:accompanist-swiperefresh:0.24.2-alpha")
 
@@ -87,7 +86,6 @@ dependencies {
     //Dagger - Hilt
     implementation("com.google.dagger:hilt-android:2.51")
     kapt("com.google.dagger:hilt-compiler:2.51")
-    implementation("androidx.hilt:hilt-lifecycle-viewmodel:1.0.0-alpha03")
     kapt("androidx.hilt:hilt-compiler:1.2.0")
     implementation("androidx.hilt:hilt-navigation-compose:1.2.0")
 
