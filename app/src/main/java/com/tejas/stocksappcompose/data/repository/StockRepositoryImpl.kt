@@ -3,8 +3,10 @@ package com.tejas.stocksappcompose.data.repository
 import android.net.http.HttpException
 import android.os.Build
 import androidx.annotation.RequiresExtension
+import com.tejas.stocksappcompose.data.csv.CSVParser
 import com.tejas.stocksappcompose.data.local.StockDatabase
 import com.tejas.stocksappcompose.data.mapper.toCompanyListing
+import com.tejas.stocksappcompose.data.mapper.toCompanyListingEntity
 import com.tejas.stocksappcompose.data.remote.StockApi
 import com.tejas.stocksappcompose.domain.model.CompanyListing
 import com.tejas.stocksappcompose.domain.repository.StockRepository
@@ -19,7 +21,8 @@ import javax.inject.Singleton
 @Singleton
 class StockRepositoryImpl @Inject constructor(
     val api: StockApi,
-    val db: StockDatabase
+    val db: StockDatabase,
+    val companyListingParser: CSVParser<CompanyListing>
 ): StockRepository {
 
     private val dao = db.dao
@@ -43,13 +46,26 @@ class StockRepositoryImpl @Inject constructor(
             }
             val remoteListings = try{
                 val response = api.getListings()
-
+                companyListingParser.parse(response.byteStream())
             }catch(e: IOException){
                 e.printStackTrace()
                 emit(Resource.Error("some error occurred"))
+                null
             }catch(e: HttpException){
                 e.printStackTrace()
                 emit(Resource.Error("some error occurred"))
+                null
+            }
+            remoteListings?.let{listings->
+                dao.clearCompanyListings()
+                dao.insertCompanyListings(
+                    listings.map { it.toCompanyListingEntity() }
+                )
+                emit(Resource.Success(
+                    data = dao.searchCompanyListing("")
+                        .map { it.toCompanyListing() }
+                ))
+                emit(Resource.Loading(false))
             }
         }
     }
