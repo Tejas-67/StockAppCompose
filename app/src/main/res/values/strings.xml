@@ -1,3 +1,5 @@
 <resources>
     <string name="app_name">StocksAppCompose</string>
+    <string name="company_listings">CompanyListings</string>
+    <string name="company_info">CompanyInfo</string>
 </resources>

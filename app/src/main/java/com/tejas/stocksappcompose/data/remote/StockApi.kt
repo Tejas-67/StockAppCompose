@@ -6,13 +6,15 @@ import retrofit2.http.Query
 
 interface StockApi {
 
-    @GET("query?function=LISTING_STATUS")
+    @GET("query")
     suspend fun getListings(
-        @Query("apiKey") apiKey: String = API_KEY
+        @Query("function") function: String = FUNCTION_LISTING_STATUS,
+        @Query("apikey") apiKey: String = API_KEY
     ): ResponseBody
 
     companion object{
+        const val FUNCTION_LISTING_STATUS = "LISTING_STATUS"
         const val API_KEY = "4BE6KTZEAB3JOAGH"
-        const val BASE_URL = "https://alphavantage.co"
+        const val BASE_URL = "https://www.alphavantage.co"
     }
 }

@@ -1,8 +1,10 @@
 package com.tejas.stocksappcompose.presentation.company_listings
 
+import android.widget.Toast
 import androidx.compose.runtime.getValue
 import androidx.compose.runtime.mutableStateOf
 import androidx.compose.runtime.setValue
+import androidx.compose.ui.platform.LocalContext
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.tejas.stocksappcompose.domain.repository.StockRepository
@@ -22,7 +24,13 @@ class CompanyListingsViewModel @Inject constructor(
 
     private var searchJob: Job? = null
 
-    fun onEvent(event: CompanyListingsEvent){
+    init{
+        getCompanyListings()
+    }
+
+    fun onEvent(
+        event: CompanyListingsEvent
+    ){
         when(event){
             is CompanyListingsEvent.Refresh ->{
                 getCompanyListings(fetchFromRemote = true)

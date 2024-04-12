@@ -1,5 +1,6 @@
 package com.tejas.stocksappcompose
 
+import StockApp
 import android.os.Bundle
 import androidx.activity.ComponentActivity
 import androidx.activity.compose.setContent
@@ -21,7 +22,7 @@ class MainActivity : ComponentActivity() {
                     modifier = Modifier.fillMaxSize(),
                     color = MaterialTheme.colorScheme.background
                ) {
-//                   DestinationsNavHost(navGraph = )
+                   StockApp()
                 }
             }
         }
