@@ -54,8 +54,7 @@ fun CompanyListingsScreen(
                 viewModel.onEvent(
                     CompanyListingsEvent.Refresh
                 )
-            },
-            modifier = Modifier.background(color = Color.Black)
+            }
         ) {
             LazyColumn(
                 modifier = Modifier.fillMaxSize()

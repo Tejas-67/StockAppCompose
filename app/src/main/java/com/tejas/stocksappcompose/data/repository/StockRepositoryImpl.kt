@@ -9,7 +9,9 @@ import com.tejas.stocksappcompose.data.local.StockDatabase
 import com.tejas.stocksappcompose.data.mapper.toCompanyListing
 import com.tejas.stocksappcompose.data.mapper.toCompanyListingEntity
 import com.tejas.stocksappcompose.data.remote.StockApi
+import com.tejas.stocksappcompose.domain.model.CompanyInfo
 import com.tejas.stocksappcompose.domain.model.CompanyListing
+import com.tejas.stocksappcompose.domain.model.IntradayInfo
 import com.tejas.stocksappcompose.domain.repository.StockRepository
 import com.tejas.stocksappcompose.util.Resource
 import kotlinx.coroutines.flow.Flow
@@ -57,11 +59,6 @@ class StockRepositoryImpl @Inject constructor(
                 null
             }
             Log.w("http", remoteListings.toString())
-//            catch(e: HttpException){
-//                e.printStackTrace()
-//                emit(Resource.Error("some error occurred"))
-//                null
-//            }
             remoteListings?.let{listings->
                 dao.clearCompanyListings()
                 dao.insertCompanyListings(
@@ -74,6 +71,20 @@ class StockRepositoryImpl @Inject constructor(
                 emit(Resource.Loading(false))
             }
         }
+    }
+
+    override suspend fun getIntradayInfo(symbol: String): Resource<List<IntradayInfo>> {
+        return try{
+            val response = api.getIntradayInfo(symbol = symbol)
+
+        }catch(e: Exception){
+            e.printStackTrace()
+            Resource.Error("couldn't load intraday info")
+        }
+    }
+
+    override suspend fun getCompanyInfo(symbol: String): Resource<CompanyInfo> {
+        TODO("Not yet implemented")
     }
 
 }

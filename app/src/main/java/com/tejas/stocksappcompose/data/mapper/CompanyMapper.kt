@@ -1,6 +1,8 @@
 package com.tejas.stocksappcompose.data.mapper
 
 import com.tejas.stocksappcompose.data.local.CompanyListingEntity
+import com.tejas.stocksappcompose.data.remote.dto.CompanyInfoDto
+import com.tejas.stocksappcompose.domain.model.CompanyInfo
 import com.tejas.stocksappcompose.domain.model.CompanyListing
 
 fun CompanyListingEntity.toCompanyListing(): CompanyListing{
@@ -24,5 +26,19 @@ fun CompanyListing.toCompanyListingEntity(): CompanyListingEntity{
         assetType = this.assetType,
         delistingDate = this.delistingDate,
         status = this.status
+    )
+}
+
+fun CompanyInfoDto.toCompanyInfo(): CompanyInfo {
+    return CompanyInfo(
+        name = name?: "",
+        symbol = symbol?: "",
+        assetType = assetType?: "",
+        description = description?: "",
+        exchange = exchange?: "",
+        currency = currency?: "",
+        country = country?: "",
+        sector = sector?: "",
+        industry = industry?: ""
     )
 }
