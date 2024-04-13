@@ -71,7 +71,11 @@ fun CompanyInfoScreen(
                     modifier = Modifier.fillMaxWidth(),
                     overflow = TextOverflow.Ellipsis,
                 )
-
+                Spacer(modifier = Modifier.height(8.dp))
+                Divider(
+                    modifier = Modifier
+                        .fillMaxWidth()
+                )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
                     text = "Country: ${company.country}",
@@ -79,17 +83,24 @@ fun CompanyInfoScreen(
                     modifier = Modifier.fillMaxWidth(),
                     overflow = TextOverflow.Ellipsis
                 )
+                Spacer(modifier = Modifier.height(8.dp))
                 Divider(
                     modifier = Modifier
                         .fillMaxWidth()
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
+                    text = "Description",
+                    fontSize = 14.sp,
+                    modifier = Modifier.fillMaxWidth()
+                )
+                Spacer(modifier = Modifier.height(4.dp))
+                Text(
                     text = company.description,
                     fontSize = 12.sp,
                     modifier = Modifier.fillMaxWidth()
                 )
-
+                Spacer(modifier = Modifier.height(8.dp))
                 if(state.stockInfos.isNotEmpty()){
                     Spacer(modifier = Modifier.height(16.dp))
                     Text(text = "Market Summary")
