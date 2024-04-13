@@ -1,11 +1,10 @@
 package com.tejas.stocksappcompose.data.repository
 
-import android.net.http.HttpException
 import android.os.Build
 import android.util.Log
-import androidx.annotation.RequiresExtension
 import com.tejas.stocksappcompose.data.csv.CSVParser
 import com.tejas.stocksappcompose.data.local.StockDatabase
+import com.tejas.stocksappcompose.data.mapper.toCompanyInfo
 import com.tejas.stocksappcompose.data.mapper.toCompanyListing
 import com.tejas.stocksappcompose.data.mapper.toCompanyListingEntity
 import com.tejas.stocksappcompose.data.remote.StockApi
@@ -16,20 +15,20 @@ import com.tejas.stocksappcompose.domain.repository.StockRepository
 import com.tejas.stocksappcompose.util.Resource
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.flow
-import java.io.IOException
 import javax.inject.Inject
 import javax.inject.Singleton
+import com.tejas.stocksappcompose.util.Resource.Success
 
 @Singleton
 class StockRepositoryImpl @Inject constructor(
     val api: StockApi,
     val db: StockDatabase,
-    val companyListingParser: CSVParser<CompanyListing>
+    val companyListingParser: CSVParser<CompanyListing>,
+    private val intradayInfoParser: CSVParser<IntradayInfo>
 ): StockRepository {
 
     private val dao = db.dao
 
-//    @RequiresExtension(extension = Build.VERSION_CODES.S, version = 7)
     override suspend fun getCompanyListings(
         fetchFromRemote: Boolean,
         query: String
@@ -39,7 +38,7 @@ class StockRepositoryImpl @Inject constructor(
             emit(Resource.Loading(true))
             val localListings = dao.searchCompanyListing(query)
             Log.w("http", "local: $localListings")
-            emit(Resource.Success(
+            emit(Success(
                 data = localListings.map { it.toCompanyListing() }
             ))
             val isDbEmpty = localListings.isEmpty() && query.isBlank()
@@ -64,7 +63,7 @@ class StockRepositoryImpl @Inject constructor(
                 dao.insertCompanyListings(
                     listings.map { it.toCompanyListingEntity() }
                 )
-                emit(Resource.Success(
+                emit(Success(
                     data = dao.searchCompanyListing("")
                         .map { it.toCompanyListing() }
                 ))
@@ -76,15 +75,23 @@ class StockRepositoryImpl @Inject constructor(
     override suspend fun getIntradayInfo(symbol: String): Resource<List<IntradayInfo>> {
         return try{
             val response = api.getIntradayInfo(symbol = symbol)
-
+            val result = intradayInfoParser.parse(response.byteStream())
+            Resource.Success(result)
         }catch(e: Exception){
             e.printStackTrace()
             Resource.Error("couldn't load intraday info")
         }
     }
 
-    override suspend fun getCompanyInfo(symbol: String): Resource<CompanyInfo> {
-        TODO("Not yet implemented")
+    override suspend fun getCompanyInfo(symbol: String): Resource<CompanyInfo>{
+        return try {
+            val response = api.getCompanyInfo(symbol = symbol)
+            Resource.Success(response.toCompanyInfo())
+        }catch(e: Exception){
+            e.printStackTrace()
+            Resource.Error("couldn't load company info")
+        }
     }
+
 
 }

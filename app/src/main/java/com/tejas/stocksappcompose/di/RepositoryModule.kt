@@ -2,8 +2,10 @@ package com.tejas.stocksappcompose.di
 
 import com.tejas.stocksappcompose.data.csv.CSVParser
 import com.tejas.stocksappcompose.data.csv.CompanyListingParser
+import com.tejas.stocksappcompose.data.csv.IntradayInfoParser
 import com.tejas.stocksappcompose.data.repository.StockRepositoryImpl
 import com.tejas.stocksappcompose.domain.model.CompanyListing
+import com.tejas.stocksappcompose.domain.model.IntradayInfo
 import com.tejas.stocksappcompose.domain.repository.StockRepository
 import dagger.Binds
 import dagger.Module
@@ -20,6 +22,12 @@ abstract class RepositoryModule {
     abstract fun bindCompanyListingsParser(
         companyListingsParser: CompanyListingParser
     ): CSVParser<CompanyListing>
+
+    @Binds
+    @Singleton
+    abstract fun bindIntradayInfoParser(
+        intradayInfoParser: IntradayInfoParser
+    ): CSVParser<IntradayInfo>
 
     @Binds
     @Singleton

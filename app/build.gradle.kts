@@ -1,3 +1,6 @@
+import dagger.Binds
+import javax.inject.Singleton
+
 plugins {
     id("com.android.application")
     id("org.jetbrains.kotlin.android")
@@ -94,6 +97,7 @@ dependencies {
     implementation("com.google.code.gson:gson:2.10")
     implementation("com.squareup.okhttp3:okhttp:5.0.0-alpha.3")
     implementation("com.squareup.okhttp3:logging-interceptor:5.0.0-alpha.3")
+    implementation("com.squareup.retrofit2:converter-moshi:2.9.0")
 
     // Room
     implementation("androidx.room:room-runtime:2.6.1")

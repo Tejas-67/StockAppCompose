@@ -2,6 +2,7 @@ package com.tejas.stocksappcompose.di
 
 import android.app.Application
 import androidx.room.Room
+import com.google.gson.Gson
 import com.tejas.stocksappcompose.data.local.StockDatabase
 import com.tejas.stocksappcompose.data.remote.StockApi
 import dagger.Module
