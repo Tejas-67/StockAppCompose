@@ -1,15 +1,15 @@
 package com.tejas.stocksappcompose.data.remote.dto
 
-import com.google.gson.annotations.SerializedName
+import com.squareup.moshi.Json
 
 data class CompanyInfoDto(
-    @SerializedName("Name") val name: String?,
-    @SerializedName("Symbol") val symbol: String?,
-    @SerializedName("AssetType") val assetType: String?,
-    @SerializedName("Description") val description: String?,
-    @SerializedName("Exchange") val exchange: String?,
-    @SerializedName("Currency") val currency: String?,
-    @SerializedName("Country") val country: String?,
-    @SerializedName("Sector") val sector: String?,
-    @SerializedName("Industry") val industry: String?
+    @field:Json(name = "Symbol") val symbol: String?,
+    @field:Json(name = "Description") val description: String?,
+    @field:Json(name = "Name") val name: String?,
+    @field:Json(name = "Country") val country: String?,
+    @field:Json(name = "Industry") val industry: String?,
+    @field:Json(name = "AssetType") val assetType: String?,
+    @field:Json(name = "Exchange") val exchange: String?,
+    @field:Json(name = "Currency") val currency: String?,
+    @field:Json(name = "Sector") val sector: String?
 )

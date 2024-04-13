@@ -1,6 +1,7 @@
 package com.tejas.stocksappcompose.presentation.company_info
 
 import android.os.Build
+import android.util.Log
 import androidx.annotation.RequiresApi
 import androidx.compose.foundation.background
 import androidx.compose.foundation.layout.Box
@@ -17,6 +18,7 @@ import androidx.compose.material3.Text
 import androidx.compose.runtime.Composable
 import androidx.compose.ui.Alignment
 import androidx.compose.ui.Modifier
+import androidx.compose.ui.graphics.Color
 import androidx.compose.ui.text.font.FontStyle
 import androidx.compose.ui.text.font.FontWeight
 import androidx.compose.ui.text.style.TextOverflow
@@ -33,6 +35,7 @@ fun CompanyInfoScreen(
     symbol: String,
 ){
     val state = viewModel.state
+    Log.w("state", "symbol: $symbol")
     if(state.error==null){
         Column(
             modifier = Modifier
@@ -41,12 +44,13 @@ fun CompanyInfoScreen(
                 .padding(16.dp)
         ){
             state.company?.let{company ->
+                Log.w("state", "stateNN: ${state.company}")
                 Text(
                     text = company.name,
                     fontWeight = FontWeight.Bold,
                     fontSize = 18.sp,
                     overflow = TextOverflow.Ellipsis,
-                    modifier = Modifier.fillMaxWidth()
+                    modifier = Modifier.fillMaxWidth(),
                 )
                 Spacer(modifier = Modifier.height(8.dp))
                 Text(
@@ -65,7 +69,7 @@ fun CompanyInfoScreen(
                     text = "Industry: ${company.industry}",
                     fontSize = 14.sp,
                     modifier = Modifier.fillMaxWidth(),
-                    overflow = TextOverflow.Ellipsis
+                    overflow = TextOverflow.Ellipsis,
                 )
 
                 Spacer(modifier = Modifier.height(8.dp))

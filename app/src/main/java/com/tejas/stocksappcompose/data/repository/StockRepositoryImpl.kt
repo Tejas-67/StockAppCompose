@@ -86,6 +86,8 @@ class StockRepositoryImpl @Inject constructor(
     override suspend fun getCompanyInfo(symbol: String): Resource<CompanyInfo>{
         return try {
             val response = api.getCompanyInfo(symbol = symbol)
+            Log.w("state", "repo: $response")
+            Log.w("state", "repo: info: ${response.toCompanyInfo()}")
             Resource.Success(response.toCompanyInfo())
         }catch(e: Exception){
             e.printStackTrace()

@@ -21,6 +21,7 @@ interface StockApi {
         @Query("symbol") symbol: String,
         @Query("apikey") apiKey: String = API_KEY
     ): ResponseBody
+
     @GET("query")
     suspend fun getCompanyInfo(
         @Query("function") function: String = FUNCTION_OVERVIEW,
@@ -35,7 +36,7 @@ interface StockApi {
         const val FUNCTION_TIME_SERIES_INTRADAY = "TIME_SERIES_INTRADAY"
         const val FUNCTION_LISTING_STATUS = "LISTING_STATUS"
         const val FUNCTION_OVERVIEW = "OVERVIEW"
-        const val API_KEY = "4BE6KTZEAB3JOAGH"
+        const val API_KEY = "2KZNK6PRAR71E5GS"
         const val BASE_URL = "https://www.alphavantage.co"
     }
 }
